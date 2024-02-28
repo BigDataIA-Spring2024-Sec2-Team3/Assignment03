@@ -1,5 +1,4 @@
 from bs4 import BeautifulSoup
-from typing import List, Optional
 import os 
 import sys 
 
@@ -8,55 +7,75 @@ sys.path.append(utils_path)
 
 from utils.Model_PDFClass import MetaDataPDF, ContentPDF
 
-def read_tei(tei_file):
-    with open(tei_file, 'r') as tei:
-        soup = BeautifulSoup(tei, 'xml')
-        return soup
-
-class TEIFile(object):
-    def __init__(self, filename: str):
-        self.filename = filename
-        self.soup = read_tei(filename)
-        self._metadata = None
-        self._content = None
-
-    @property
-    def metadata(self) -> MetaDataPDF:
-        if not self._metadata:
-            idno = self.soup.find('idno', type='DOI')
-            self._metadata = MetaDataPDF(
-                doc_id=1,
-                doc_name=self.soup.title.text,
-                doc_source=self.filename,
-                doc_md5=idno.text if idno else '',
-                doc_length=10  # dummy value
-            )
-        return self._metadata
-
-    @property
-    def content(self) -> List[ContentPDF]:
-        if not self._content:
-            content_data = []
-            for div in self.soup.body.find_all("div"):
-                if not div.get("type"):
-                    section_title = div.head.text if div.head else None
-                    for p_num, p in enumerate(div.find_all('p')):
-                        content_data.append(
-                            ContentPDF(
-                                content_id=len(content_data) + 1,
-                                doc_id=self.metadata.doc_id,
-                                section='body',
-                                section_title=section_title,
-                                paragraph_num=p_num,
-                                paragraph_text=p.text
-                            )
-                        )
-            self._content = content_data
-        return self._content
-
-#tei = TEIFile('./xml/2024-l1-topics-combined-2.pdf.tei.xml')
 xml_folder = os.path.join(os.path.dirname(os.getcwd()), 'xml')
-tei_path = os.path.join(xml_folder, '2024-l1-topics-combined-2.pdf.tei.xml')
-tei = TEIFile(tei_path)
-print(tei.metadata)
-print(tei.content[1].json())
+#xml_folder = os.path.join(os.getcwd(), 'xml')
+METADATA_FILES = [os.path.join(xml_folder, f'Grobid_RR_2024_l{i}_combined_metadata.xml') for i in range(1, 4)]
+CONTENT_FILES = [os.path.join(xml_folder, f'2024-l{i}-topics-combined-2.pdf.tei.xml') for i in range(1, 4)]
+
+
+class Dataset:
+    
+    def __init__(self):
+        self.metadata = []
+        self.content = []
+        self.load_data()
+        
+    def load_data(self):
+        
+        for file in METADATA_FILES:
+            metadata = self.parse_metadata(file)
+            self.metadata.append(metadata)
+            
+        for file in CONTENT_FILES:
+            content = self.parse_content(file)
+            self.content.extend(content)
+            
+    def parse_metadata(self, file):
+        # Parse metadata XML
+        with open(file) as f:
+            soup = BeautifulSoup(f, 'xml')
+            
+        filename = soup.find('Filename').text
+        title = soup.find('Title').text
+        header = soup.find('Header').text
+        paragraph = soup.find('Paragraph').text
+        idno = soup.find('Idno').text
+        application = soup.find('Application').text
+        
+        metadata = MetaDataPDF(
+            filename = filename,
+            title = title,
+            header = header,
+            paragraph = paragraph,
+            idno = idno,
+            application = application
+        )
+        
+        return metadata
+    
+    def parse_content(self, file):
+        # Parse content XML
+        with open(file) as f:
+            soup = BeautifulSoup(f, 'xml')
+            
+        contents = []
+        for div in soup.find_all('div'):
+            
+            section_title = div.find('head').text if div.find('head') else None
+            
+            for i, p in enumerate(div.find_all('p')):
+                content = ContentPDF(
+                    content_id = len(contents)+1, 
+                    doc_id = 1,
+                    section = 'body',
+                    section_title = section_title,
+                    paragraph_num = i,
+                    paragraph_text = p.text
+                )
+                contents.append(content)
+                
+        return contents
+    
+dataset = Dataset()
+print(dataset.metadata[2])
+print(dataset.content[2])
