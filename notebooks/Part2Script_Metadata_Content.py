@@ -50,6 +50,9 @@ class TEIFile(object):
             self._content = content_data
         return self._content
 
-tei = TEIFile('./xml/2024-l1-topics-combined-2.pdf.tei.xml')
+#tei = TEIFile('./xml/2024-l1-topics-combined-2.pdf.tei.xml')
+xml_folder = os.path.join(os.path.dirname(os.getcwd()), 'xml')
+tei_path = os.path.join(xml_folder, '2024-l1-topics-combined-2.pdf.tei.xml')
+tei = TEIFile(tei_path)
 print(tei.metadata)
 print(tei.content[1].json())
