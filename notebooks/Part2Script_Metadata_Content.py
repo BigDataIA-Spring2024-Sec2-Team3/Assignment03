@@ -1,37 +1,13 @@
 from bs4 import BeautifulSoup
-from pydantic import BaseModel, Field
 from typing import List, Optional
-from datetime import date
+
+from utils.PDFClassModel import MetaDataPDF, ContentPDF
 
 def read_tei(tei_file):
     with open(tei_file, 'r') as tei:
         soup = BeautifulSoup(tei, 'xml')
         return soup
 
-class MetaDataPDF(BaseModel):
-    doc_id: int
-    doc_name: str
-    doc_source: str
-    doc_date: Optional[date] = None
-    doc_md5: str
-    doc_length: int
-
-    class Config:
-        orm_mode = True
-
-class ContentPDF(BaseModel):
-    content_id: int
-    doc_id: int
-    section: str
-    section_title: Optional[str] = None
-    paragraph_num: Optional[int] = None
-    paragraph_text: Optional[str] = None
-    formula_id: Optional[str] = None
-    figure_id: Optional[str] = None
-    note_id: Optional[str] = None
-
-    class Config:
-        orm_mode = True
 
 class TEIFile(object):
     def __init__(self, filename: str):
