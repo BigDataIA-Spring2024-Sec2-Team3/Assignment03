@@ -1,13 +1,17 @@
 from bs4 import BeautifulSoup
 from typing import List, Optional
+import os 
+import sys 
 
-from utils.PDFClassModel import MetaDataPDF, ContentPDF
+utils_path = os.path.abspath(os.path.join(os.getcwd(), '..'))
+sys.path.append(utils_path)
+
+from utils.Model_PDFClass import MetaDataPDF, ContentPDF
 
 def read_tei(tei_file):
     with open(tei_file, 'r') as tei:
         soup = BeautifulSoup(tei, 'xml')
         return soup
-
 
 class TEIFile(object):
     def __init__(self, filename: str):
