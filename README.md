@@ -34,7 +34,7 @@ This project involves designing Python classes for managing data schemas and imp
 - DBT & Snowflake
 
 ## Project Structure
-
+```
 .
 ├── Diagram
 │   ├── Architecture.py
@@ -84,7 +84,7 @@ This project involves designing Python classes for managing data schemas and imp
     ├── Grobid_RR_2024_l1_combined_metadata.xml
     ├── Grobid_RR_2024_l2_combined_metadata.xml
     └── Grobid_RR_2024_l3_combined_metadata.xml
-
+```
 ## Prerequisites
 
 - General recommendation Python 3.8+ and required package
