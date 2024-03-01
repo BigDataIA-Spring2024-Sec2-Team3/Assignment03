@@ -4,12 +4,14 @@ import sys
 import pandas as pd
 import re
  
-utils_path = os.path.abspath(os.path.join(os.getcwd(), '..'))
+utils_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'utils'))
 sys.path.append(utils_path)
- 
-from utils.Model_PDFClass import MetaDataPDF, ContentPDF
- 
-xml_folder = os.path.join(os.path.dirname(os.getcwd()), 'xml')
+
+from Model_PDFClass import MetaDataPDF, ContentPDF
+
+current_file_dir = os.path.dirname(os.path.abspath(__file__))
+xml_folder = os.path.join(os.path.dirname(os.path.dirname(current_file_dir)), 'xml')
+
 METADATA_FILES = [os.path.join(xml_folder, f'Grobid_RR_2024_l{i}_combined_metadata.xml') for i in range(1, 4)]
 CONTENT_FILES = [os.path.join(xml_folder, f'2024-l{i}-topics-combined-2.pdf.tei.xml') for i in range(1, 4)]
  
