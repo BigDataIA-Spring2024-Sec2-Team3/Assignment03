@@ -7,7 +7,7 @@ utils_path = os.path.abspath(os.path.join(os.getcwd(), '..'))
 sys.path.append(utils_path)
 
 from utils.Model_PDFClass import MetaDataPDF, ContentPDF
-from notebooks.Pydantic_Metadata_Content import METADATA_FILES, CONTENT_FILES
+from notebooks.PDFParsing.PDFParsing import METADATA_FILES, CONTENT_FILES
 from pydantic import ValidationError
 
 class TEIFileTestClass(TestCase):
