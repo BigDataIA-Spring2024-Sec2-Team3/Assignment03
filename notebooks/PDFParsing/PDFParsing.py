@@ -27,17 +27,22 @@ class Dataset:
         self.parse_content()
  
     def parse_metadata(self):
+    # Define a dictionary to map doc_id to preset titles
+        preset_titles = {1: "2024 Level I Topic Outlines", 2: "2024 Level II Topic Outlines", 3: "2024 Level III Topic Outlines"}
+
         for i, file in enumerate(METADATA_FILES):
             soup = BeautifulSoup(open(file), 'xml')
- 
+
             filename = soup.find('Filename').text
-            title = soup.find('Title').text
             idno = soup.find('Idno').text
- 
+
             # Use calculate_year and calculate_level methods here
             year = self.calculate_year(filename)
             level = self.calculate_level(filename)
- 
+
+            # Use the preset title if available, otherwise use the default title from the XML
+            title = preset_titles.get(i + 1, soup.find('Title').text)
+
             metadata = MetaDataPDF(
                 doc_id=i + 1,
                 filename=filename,
@@ -46,7 +51,7 @@ class Dataset:
                 year=year,
                 level=level,
             )
- 
+
             self.metadata.append(metadata)
 
     def parse_content(self):
