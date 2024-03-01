@@ -1,16 +1,17 @@
 
-from pydantic import BaseModel, PositiveInt, HttpUrl,field_validator
+from pydantic import BaseModel, PositiveInt, HttpUrl,validator,field_validator, model_validator, ValidationError, ValidationInfo
 from typing import List
 import re
 
 class Article(BaseModel):
     # data = [topic, year_text, level_text, paragraphs, bullet, full_link, link1]
-    topic: str = 'topic null'
+    title: str = 'None'
+    topic: str = 'None'
     year: PositiveInt = 1900
     level: str = 'Level I'
     paragraphs: str = 'None'
     bullet: str = 'None'
-    full_links: HttpUrl = 'www.cafexample.org'
+    full_link: HttpUrl = 'www.cafexample.org'
     link1: HttpUrl = 'www.cafexample.org'
 
     ## year: 2024 Curriculum
