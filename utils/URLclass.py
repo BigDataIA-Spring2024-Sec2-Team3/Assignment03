@@ -5,17 +5,17 @@ import re
 
 class Article(BaseModel):
     # data = [topic, year_text, level_text, paragraphs, bullet, full_link, link1]
-    title: str = 'None'
-    topic: str = 'None'
-    year: PositiveInt = 1900
-    level: str = 'Level I'
-    paragraphs: str = 'None'
-    bullet: str = 'None'
-    full_link: HttpUrl = 'www.cafexample.org'
-    link1: HttpUrl = 'www.cafexample.org'
+    NameOfTopic: str = 'None'
+    Title: str = 'None'
+    Year: PositiveInt = 1900
+    Level: str = 'Level I'
+    Introduction: str = 'None'
+    LearningOutcome: str = 'None'
+    LinkToPDF: HttpUrl = 'www.example.org'
+    LinkToSummary: HttpUrl = 'www.example.org'
 
     ## year: 2024 Curriculum
-    @field_validator('year',mode='before')
+    @field_validator('Year',mode='before')
     @classmethod
     def extract_year(cls, v):
         if isinstance(v, str):  
@@ -30,7 +30,7 @@ class Article(BaseModel):
         return v # default number should be good
 
     ## 
-    @field_validator('level', mode='before')
+    @field_validator('Level', mode='before')
     @classmethod
     def level_only_have_three(cls, v):
         match = re.search(r'^Level\s(I{1,3})$', v) # start with Level and have 1-3 I
