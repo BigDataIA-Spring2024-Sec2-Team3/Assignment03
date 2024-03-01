@@ -1,9 +1,12 @@
+# run uder the Diagram folder
+
 from diagrams import Diagram, Cluster
 from diagrams.onprem.database import PostgreSQL
 from diagrams.onprem.analytics import Dbt
 from diagrams.programming.language import Python
 from diagrams.custom import Custom
-
+# import os
+# print(os.getcwd())
 with Diagram("Project Workflow", show=True, direction="LR"):
     pydantic = Custom("Pydantic", "pydantic-logo.png")  # Update the path to the Pydantic logo image
 

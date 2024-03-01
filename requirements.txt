@@ -3,3 +3,6 @@ lxml
 beautifulsoup4
 pandas
 pytest
+dotenv
+sqlalchemy
+bcrypt
