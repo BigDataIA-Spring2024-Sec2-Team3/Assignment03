@@ -4,7 +4,7 @@ from typing import List
 import re
 
 class Article(BaseModel):
-    # data = [topic, year_text, level_text, paragraphs, bullet, full_link, link1]
+    # data = [topic, year, level, introdu, Learning outcome, PDF, link]
     NameOfTopic: str = 'None'
     Title: str = 'None'
     Year: PositiveInt = 1900
