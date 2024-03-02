@@ -171,9 +171,9 @@ For detailed instructions on using DBT, refer to the [DBT Tutorial](https://docs
 
 ## Team
 
-| Name         | Contribution% | Contributions |
-| ------------ | ------------- | ------------- |
-| Dongyu Liu   |               |               |
-| Ekta Bhatia  |               |               |
-| Parth Kalani |               |               |
-| Sumit Sharma |               |               |
+| Name         | NUID          |
+| ------------ | ------------- |
+| Dongyu Liu   |  002837324    |
+| Ekta Bhatia  |  002767736    |
+| Parth Kalani |  002766306    |
+| Sumit Sharma |  002778911    |
